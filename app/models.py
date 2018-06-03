@@ -95,6 +95,23 @@ class User(UserMixin, db.Model):
         return '<User %r>' % self.username
 
 
+class Assets(db.Model):
+    __tablename__ = 'assets'
+    id = db.Column(db.String(64), primary_key=True)
+    description = db.Column(db.String(64), unique=True)
+
+class Portfolios(db.Model):
+    __tablename__ = 'portfolios'
+    id = db.Column(db.String(64), primary_key=True)
+    description = db.Column(db.String(64), unique=True)
+
+class Weights(db.Model):
+    __tablename__ = 'weights'
+    port_id = db.Column(db.String(64), primary_key=True)
+    port_date = db.Column(db.Date, unique=True)
+    asset = db.Column(db.String(64), unique=False)
+    weight = db.Column(db.Float, unique=False)
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
